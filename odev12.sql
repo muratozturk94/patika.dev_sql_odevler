@@ -22,8 +22,11 @@ AND
 replacement_cost = (SELECT MIN(replacement_cost) FROM film)
 );
 
-SELECT customer_id, COUNT(*) FROM payment
-GROUP BY customer_id
+SELECT customer.first_name, customer.last_name, COUNT(payment.customer_id)
+FROM payment
+INNER JOIN customer
+ON payment.customer_id = customer.customer_id
+GROUP BY customer.first_name, customer.last_name, payment.customer_id
 ORDER BY COUNT(*) DESC
-LIMIT(10);
+LIMIT 1;
 
